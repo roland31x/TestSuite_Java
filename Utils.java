@@ -3413,4 +3413,366 @@ public class Utils {
     public static boolean isEven_400(int number) {
         return number % 2 == 0;
     }
+
+    // 401. Check if a number is odd
+    public static boolean isOdd_401(int number) {
+        return number % 2 != 0;
+    }
+
+    // 402. Check if a number is a palindrome
+    public static boolean isPalindromeNumber_402(int number) {
+        String str = Integer.toString(number);
+        return new StringBuilder(str).reverse().toString().equals(str);
+    }
+
+    // 403. Check if a string is a palindrome (case-insensitive)
+    public static boolean isPalindromeString_403(String s) {
+        if (s == null) return false;
+        String clean = s.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        return new StringBuilder(clean).reverse().toString().equals(clean);
+    }
+
+    // 404. Get all prime numbers up to a limit
+    public static List<Integer> getPrimesUpTo_404(int limit) {
+        List<Integer> primes = new ArrayList<>();
+        for (int i = 2; i <= limit; i++) {
+            if (isPrime_405(i)) primes.add(i);
+        }
+        return primes;
+    }
+
+    // 405. Check if a number is prime
+    public static boolean isPrime_405(int n) {
+        if (n < 2) return false;
+        if (n == 2) return true;
+        if (n % 2 == 0) return false;
+        for (int i = 3; i <= Math.sqrt(n); i += 2) {
+            if (n % i == 0) return false;
+        }
+        return true;
+    }
+
+    // 406. Get the factorial of a number
+    public static long factorial_406(int n) {
+        if (n < 0) throw new IllegalArgumentException("Negative number");
+        long result = 1;
+        for (int i = 2; i <= n; i++) result *= i;
+        return result;
+    }
+
+    // 407. Generate a random UUID
+    public static String generateUUID_407() {
+        return UUID.randomUUID().toString();
+    }
+
+    // 408. Get the first non-repeated character
+    public static Character firstNonRepeatedChar_408(String s) {
+        if (s == null) return null;
+        Map<Character, Integer> map = new LinkedHashMap<>();
+        for (char c : s.toCharArray()) map.put(c, map.getOrDefault(c, 0) + 1);
+        for (Map.Entry<Character, Integer> entry : map.entrySet()) {
+            if (entry.getValue() == 1) return entry.getKey();
+        }
+        return null;
+    }
+
+    // 409. Count occurrences of a character
+    public static int countCharOccurrences_409(String s, char c) {
+        if (s == null) return 0;
+        int count = 0;
+        for (char ch : s.toCharArray()) {
+            if (ch == c) count++;
+        }
+        return count;
+    }
+
+    // 410. Find the longest word in a sentence
+    public static String longestWord_410(String sentence) {
+        if (sentence == null || sentence.isEmpty()) return "";
+        String[] words = sentence.split("\\s+");
+        return Arrays.stream(words).max(Comparator.comparingInt(String::length)).orElse("");
+    }
+
+    // 411. Round a double to n decimal places
+    public static double round_411(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
+    // 412. Remove non-ASCII characters
+    public static String removeNonAscii_412(String s) {
+        if (s == null) return null;
+        return s.replaceAll("[^\\x00-\\x7F]", "");
+    }
+
+    // 413. Count words in a string
+    public static int countWords_413(String s) {
+        if (s == null || s.trim().isEmpty()) return 0;
+        return s.trim().split("\\s+").length;
+    }
+
+    // 414. Check if a year is a leap year
+    public static boolean isLeapYear_414(int year) {
+        return Year.isLeap(year);
+    }
+
+    // 415. Get current date in custom format
+    public static String getCurrentDateFormatted_415(String pattern) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        return LocalDate.now().format(formatter);
+    }
+
+    // 416. Generate random password of given length
+    public static String generatePassword_416(int length) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+        Random rand = new Random();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            sb.append(chars.charAt(rand.nextInt(chars.length())));
+        }
+        return sb.toString();
+    }
+
+    // 417. Escape HTML tags
+    public static String escapeHtml_417(String s) {
+        if (s == null) return null;
+        return s.replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;");
+    }
+
+    // 418. Unescape HTML tags
+    public static String unescapeHtml_418(String s) {
+        if (s == null) return null;
+        return s.replace("&lt;", "<")
+                .replace("&gt;", ">")
+                .replace("&amp;", "&");
+    }
+
+    // 419. Get number of lines in a string
+    public static int countLines_419(String s) {
+        if (s == null || s.isEmpty()) return 0;
+        return s.split("\r\n|\r|\n").length;
+    }
+
+    // 420. Repeat a string n times
+    public static String repeat_420(String s, int times) {
+        return s == null ? null : s.repeat(times);
+    }
+
+    // 421. Find GCD of two numbers
+    public static int gcd_421(int a, int b) {
+        while (b != 0) {
+            int tmp = b;
+            b = a % b;
+            a = tmp;
+        }
+        return a;
+    }
+
+    // 422. Find LCM of two numbers
+    public static int lcm_422(int a, int b) {
+        return a * (b / gcd_421(a, b));
+    }
+
+    // 423. Count uppercase letters
+    public static int countUppercase_423(String s) {
+        if (s == null) return 0;
+        int count = 0;
+        for (char c : s.toCharArray()) {
+            if (Character.isUpperCase(c)) count++;
+        }
+        return count;
+    }
+
+    // 424. Count lowercase letters
+    public static int countLowercase_424(String s) {
+        if (s == null) return 0;
+        int count = 0;
+        for (char c : s.toCharArray()) {
+            if (Character.isLowerCase(c)) count++;
+        }
+        return count;
+    }
+
+    // 425. Get first N characters
+    public static String firstN_425(String s, int n) {
+        if (s == null || n < 0) return "";
+        return s.length() <= n ? s : s.substring(0, n);
+    }
+
+    // 426. Get last N characters
+    public static String lastN_426(String s, int n) {
+        if (s == null || n < 0) return "";
+        return s.length() <= n ? s : s.substring(s.length() - n);
+    }
+
+    // 427. Count punctuation characters
+    public static int countPunctuation_427(String s) {
+        if (s == null) return 0;
+        return (int) s.chars().filter(ch -> ",.;:!?".indexOf(ch) != -1).count();
+    }
+
+    // 428. Get weekday name from date
+    public static String getWeekdayName_428(LocalDate date) {
+        return date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+    }
+
+    // 429. Convert string to boolean (true, yes, 1)
+    public static boolean stringToBoolean_429(String s) {
+        if (s == null) return false;
+        return s.equalsIgnoreCase("true") ||
+               s.equalsIgnoreCase("yes") ||
+               s.equals("1");
+    }
+
+    // 430. Safe parse int with default
+    public static int parseIntOrDefault_430(String s, int def) {
+        try {
+            return Integer.parseInt(s);
+        } catch (Exception e) {
+            return def;
+        }
+    }
+
+    // 431. Safe parse double with default
+    public static double parseDoubleOrDefault_431(String s, double def) {
+        try {
+            return Double.parseDouble(s);
+        } catch (Exception e) {
+            return def;
+        }
+    }
+
+    // 432. Clamp integer within range
+    public static int clamp_432(int value, int min, int max) {
+        return Math.max(min, Math.min(max, value));
+    }
+
+    // 433. Shuffle characters in a string
+    public static String shuffleString_433(String s) {
+        if (s == null) return null;
+        List<Character> chars = s.chars().mapToObj(c -> (char)c).collect(Collectors.toList());
+        Collections.shuffle(chars);
+        StringBuilder sb = new StringBuilder();
+        chars.forEach(sb::append);
+        return sb.toString();
+    }
+
+    // 434. Pad string left
+    public static String padLeft_434(String s, int width, char padChar) {
+        return String.format("%" + width + "s", s).replace(' ', padChar);
+    }
+
+    // 435. Pad string right
+    public static String padRight_435(String s, int width, char padChar) {
+        return String.format("%-" + width + "s", s).replace(' ', padChar);
+    }
+
+    // 436. Check if string contains only digits
+    public static boolean isNumeric_436(String s) {
+        return s != null && s.matches("\\d+");
+    }
+
+    // 437. Convert boolean to "Yes"/"No"
+    public static String boolToYesNo_437(boolean b) {
+        return b ? "Yes" : "No";
+    }
+
+    // 438. Get ordinal suffix (1st, 2nd, 3rd, etc.)
+    public static String getOrdinalSuffix_438(int number) {
+        if (number % 100 >= 11 && number % 100 <= 13) return number + "th";
+        switch (number % 10) {
+            case 1: return number + "st";
+            case 2: return number + "nd";
+            case 3: return number + "rd";
+            default: return number + "th";
+        }
+    }
+
+    // 439. Convert array to comma-separated string
+    public static String arrayToCSV_439(String[] array) {
+        return String.join(",", array);
+    }
+
+    // 440. Convert comma-separated string to array
+    public static String[] csvToArray_440(String csv) {
+        return csv.split("\\s*,\\s*");
+    }
+
+    // 441. Format number with commas
+    public static String formatNumber_441(int number) {
+        return String.format("%,d", number);
+    }
+
+    // 442. Check if two strings are anagrams
+    public static boolean areAnagrams_442(String s1, String s2) {
+        if (s1 == null || s2 == null) return false;
+        char[] a1 = s1.replaceAll("\\s", "").toLowerCase().toCharArray();
+        char[] a2 = s2.replaceAll("\\s", "").toLowerCase().toCharArray();
+        Arrays.sort(a1); Arrays.sort(a2);
+        return Arrays.equals(a1, a2);
+    }
+
+    // 443. Generate random alphanumeric string
+    public static String randomAlphaNumeric_443(int length) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        Random rand = new Random();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            sb.append(chars.charAt(rand.nextInt(chars.length())));
+        }
+        return sb.toString();
+    }
+
+    // 444. Convert byte array to hex string
+    public static String bytesToHex_444(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) sb.append(String.format("%02x", b));
+        return sb.toString();
+    }
+
+    // 445. Convert hex string to byte array
+    public static byte[] hexToBytes_445(String hex) {
+        int len = hex.length();
+        byte[] result = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            result[i / 2] = (byte) ((Character.digit(hex.charAt(i), 16) << 4)
+                                    + Character.digit(hex.charAt(i+1), 16));
+        }
+        return result;
+    }
+
+    // 446. Count alphanumeric characters
+    public static int countAlphaNumeric_446(String s) {
+        if (s == null) return 0;
+        return (int) s.chars().filter(Character::isLetterOrDigit).count();
+    }
+
+    // 447. Convert double to percentage string
+    public static String toPercentage_447(double value, int decimals) {
+        return String.format("%." + decimals + "f%%", value * 100);
+    }
+
+    // 448. Parse percentage string to double
+    public static double parsePercentage_448(String s) {
+        return Double.parseDouble(s.replace("%", "").trim()) / 100.0;
+    }
+
+    // 449. Remove duplicate characters from a string
+    public static String removeDuplicates_449(String s) {
+        if (s == null) return null;
+        return s.chars().distinct().mapToObj(c -> String.valueOf((char) c)).collect(Collectors.joining());
+    }
+
+    // 450. Shuffle an integer array
+    public static void shuffleArray_450(int[] array) {
+        Random rand = new Random();
+        for (int i = array.length - 1; i > 0; i--) {
+            int j = rand.nextInt(i + 1);
+            int temp = array[i]; array[i] = array[j]; array[j] = temp;
+        }
+    }
 }
