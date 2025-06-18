@@ -1607,4 +1607,458 @@ public class Utils {
         return s.replaceAll("\\D+", "");
     }
 
+    // 201. Check if string starts with a prefix (case-insensitive)
+    public static boolean startsWithIgnoreCase_201(String s, String prefix) {
+        if (s == null || prefix == null) return false;
+        return s.toLowerCase().startsWith(prefix.toLowerCase());
+    }
+
+    // 202. Check if string ends with a suffix (case-insensitive)
+    public static boolean endsWithIgnoreCase_202(String s, String suffix) {
+        if (s == null || suffix == null) return false;
+        return s.toLowerCase().endsWith(suffix.toLowerCase());
+    }
+
+    // 203. Convert an array of strings to a list
+    public static List<String> arrayToList_203(String[] arr) {
+        if (arr == null) return new ArrayList<>();
+        return Arrays.asList(arr);
+    }
+
+    // 204. Convert a list of strings to an array
+    public static String[] listToArray_204(List<String> list) {
+        if (list == null) return new String[0];
+        return list.toArray(new String[0]);
+    }
+
+    // 205. Get the current date as a formatted string (yyyy-MM-dd)
+    public static String currentDate_205() {
+        return new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+    }
+
+    // 206. Get the current time as a formatted string (HH:mm:ss)
+    public static String currentTime_206() {
+        return new SimpleDateFormat("HH:mm:ss").format(new Date());
+    }
+
+    // 207. Convert date string from one format to another
+    public static String convertDateFormat_207(String dateStr, String fromFormat, String toFormat) {
+        if (dateStr == null || fromFormat == null || toFormat == null) return null;
+        try {
+            SimpleDateFormat sdfFrom = new SimpleDateFormat(fromFormat);
+            SimpleDateFormat sdfTo = new SimpleDateFormat(toFormat);
+            Date date = sdfFrom.parse(dateStr);
+            return sdfTo.format(date);
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
+    // 208. Round a double to N decimal places
+    public static double round_208(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+        long factor = (long) Math.pow(10, places);
+        return (double) Math.round(value * factor) / factor;
+    }
+
+    // 209. Get the day of week from date string (yyyy-MM-dd), e.g. "Monday"
+    public static String getDayOfWeek_209(String dateStr) {
+        if (dateStr == null) return null;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = sdf.parse(dateStr);
+            SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE");
+            return dayFormat.format(date);
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
+    // 210. Convert seconds to HH:mm:ss format
+    public static String secondsToHHmmss_210(long totalSeconds) {
+        long hours = totalSeconds / 3600;
+        long minutes = (totalSeconds % 3600) / 60;
+        long seconds = totalSeconds % 60;
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
+    // 211. Get the nth Fibonacci number (0-based)
+    public static long fibonacci_211(int n) {
+        if (n < 0) throw new IllegalArgumentException();
+        if (n == 0) return 0;
+        if (n == 1) return 1;
+        long a = 0, b = 1, c = 0;
+        for (int i = 2; i <= n; i++) {
+            c = a + b;
+            a = b;
+            b = c;
+        }
+        return c;
+    }
+
+    // 212. Convert a map to a query string (e.g. key1=value1&key2=value2)
+    public static String mapToQueryString_212(Map<String, String> map) {
+        if (map == null || map.isEmpty()) return "";
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            if (entry.getKey() != null && entry.getValue() != null) {
+                sb.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
+            }
+        }
+        sb.setLength(sb.length() - 1);
+        return sb.toString();
+    }
+
+    // 213. Parse query string to a map
+    public static Map<String, String> queryStringToMap_213(String query) {
+        Map<String, String> map = new HashMap<>();
+        if (query == null || query.isEmpty()) return map;
+        String[] pairs = query.split("&");
+        for (String pair : pairs) {
+            String[] kv = pair.split("=", 2);
+            if (kv.length == 2) {
+                map.put(kv[0], kv[1]);
+            } else if (kv.length == 1) {
+                map.put(kv[0], "");
+            }
+        }
+        return map;
+    }
+
+    // 214. Check if a number is prime
+    public static boolean isPrime_214(int n) {
+        if (n <= 1) return false;
+        if (n <= 3) return true;
+        if (n % 2 == 0 || n % 3 == 0) return false;
+        for (int i = 5; i * i <= n; i += 6) {
+            if (n % i == 0 || n % (i + 2) == 0) return false;
+        }
+        return true;
+    }
+
+    // 215. Get prime numbers up to a limit (inclusive)
+    public static List<Integer> primesUpTo_215(int limit) {
+        List<Integer> primes = new ArrayList<>();
+        for (int i = 2; i <= limit; i++) {
+            if (isPrime_214(i)) primes.add(i);
+        }
+        return primes;
+    }
+
+    // 216. Calculate Greatest Common Divisor (GCD)
+    public static int gcd_216(int a, int b) {
+        if (b == 0) return Math.abs(a);
+        return gcd_216(b, a % b);
+    }
+
+    // 217. Calculate Least Common Multiple (LCM)
+    public static int lcm_217(int a, int b) {
+        if (a == 0 || b == 0) return 0;
+        return Math.abs(a * b) / gcd_216(a, b);
+    }
+
+    // 218. Convert a string to title case
+    public static String toTitleCase_218(String s) {
+        if (s == null || s.isEmpty()) return s;
+        String[] words = s.toLowerCase().split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                sb.append(Character.toUpperCase(word.charAt(0)));
+                if (word.length() > 1) sb.append(word.substring(1));
+                sb.append(" ");
+            }
+        }
+        return sb.toString().trim();
+    }
+
+    // 219. Convert boolean to "yes" or "no"
+    public static String boolToYesNo_219(boolean value) {
+        return value ? "yes" : "no";
+    }
+
+    // 220. Parse "yes" or "no" to boolean
+    public static boolean yesNoToBool_220(String s) {
+        if (s == null) return false;
+        s = s.trim().toLowerCase();
+        return s.equals("yes") || s.equals("true") || s.equals("1");
+    }
+
+    // 221. Generate a random integer between min and max (inclusive)
+    public static int randomIntInRange_221(int min, int max) {
+        if (min > max) throw new IllegalArgumentException("min > max");
+        Random rand = new Random();
+        return rand.nextInt(max - min + 1) + min;
+    }
+
+    // 222. Check if a string is blank (null, empty, or whitespace only)
+    public static boolean isBlank_222(String s) {
+        return s == null || s.trim().isEmpty();
+    }
+
+    // 223. Remove whitespace from start and end of string
+    public static String trim_223(String s) {
+        if (s == null) return null;
+        return s.trim();
+    }
+
+    // 224. Check if array contains a value
+    public static <T> boolean arrayContains_224(T[] arr, T value) {
+        if (arr == null) return false;
+        for (T elem : arr) {
+            if (Objects.equals(elem, value)) return true;
+        }
+        return false;
+    }
+
+    // 225. Convert boolean array to int array (true=1, false=0)
+    public static int[] booleanArrayToIntArray_225(boolean[] arr) {
+        if (arr == null) return new int[0];
+        int[] res = new int[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            res[i] = arr[i] ? 1 : 0;
+        }
+        return res;
+    }
+
+    // 226. Convert int array to boolean array (0=false, others=true)
+    public static boolean[] intArrayToBooleanArray_226(int[] arr) {
+        if (arr == null) return new boolean[0];
+        boolean[] res = new boolean[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            res[i] = arr[i] != 0;
+        }
+        return res;
+    }
+
+    // 227. Convert camelCase string to Sentence case
+    public static String camelToSentence_227(String s) {
+        if (s == null) return null;
+        String result = s.replaceAll("([a-z])([A-Z])", "$1 $2");
+        return Character.toUpperCase(result.charAt(0)) + result.substring(1).toLowerCase();
+    }
+
+    // 227. Convert camelCase string to Sentence case
+    public static String camelToSentence_227(String s) {
+        if (s == null || s.isEmpty()) return s;
+        String result = s.replaceAll("([a-z])([A-Z])", "$1 $2");
+        return Character.toUpperCase(result.charAt(0)) + result.substring(1).toLowerCase();
+    }
+
+    // 228. Generate a random hex color string (e.g., "#A1B2C3")
+    public static String randomHexColor_228() {
+        Random rand = new Random();
+        int r = rand.nextInt(256);
+        int g = rand.nextInt(256);
+        int b = rand.nextInt(256);
+        return String.format("#%02X%02X%02X", r, g, b);
+    }
+
+    // 229. Check if a string contains only digits
+    public static boolean isNumeric_229(String s) {
+        if (s == null) return false;
+        return s.matches("\\d+");
+    }
+
+    // 230. Convert an int array to a comma-separated string
+    public static String intArrayToCsv_230(int[] arr) {
+        if (arr == null || arr.length == 0) return "";
+        StringBuilder sb = new StringBuilder();
+        for (int num : arr) {
+            sb.append(num).append(",");
+        }
+        sb.setLength(sb.length() - 1);
+        return sb.toString();
+    }
+
+    // 231. Convert a CSV string to int array
+    public static int[] csvToIntArray_231(String csv) {
+        if (csv == null || csv.trim().isEmpty()) return new int[0];
+        String[] parts = csv.split(",");
+        int[] result = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) {
+            try {
+                result[i] = Integer.parseInt(parts[i].trim());
+            } catch (NumberFormatException e) {
+                result[i] = 0;
+            }
+        }
+        return result;
+    }
+
+    // 232. Capitalize the first letter of each word in a string
+    public static String capitalizeWords_232(String s) {
+        if (s == null || s.isEmpty()) return s;
+        String[] words = s.split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                sb.append(Character.toUpperCase(word.charAt(0)));
+                if (word.length() > 1) sb.append(word.substring(1).toLowerCase());
+                sb.append(" ");
+            }
+        }
+        return sb.toString().trim();
+    }
+
+    // 233. Calculate factorial of a number (recursive)
+    public static long factorial_233(int n) {
+        if (n < 0) throw new IllegalArgumentException("Negative factorial");
+        if (n == 0) return 1;
+        return n * factorial_233(n - 1);
+    }
+
+    // 234. Check if two arrays are equal (same length and elements)
+    public static <T> boolean arraysEqual_234(T[] arr1, T[] arr2) {
+        if (arr1 == arr2) return true;
+        if (arr1 == null || arr2 == null) return false;
+        if (arr1.length != arr2.length) return false;
+        for (int i = 0; i < arr1.length; i++) {
+            if (!Objects.equals(arr1[i], arr2[i])) return false;
+        }
+        return true;
+    }
+
+    // 235. Flatten a list of lists into a single list
+    public static <T> List<T> flattenList_235(List<List<T>> lists) {
+        List<T> flat = new ArrayList<>();
+        if (lists == null) return flat;
+        for (List<T> list : lists) {
+            if (list != null) {
+                flat.addAll(list);
+            }
+        }
+        return flat;
+    }
+
+    // 236. Convert a list of Integers to int array
+    public static int[] listToIntArray_236(List<Integer> list) {
+        if (list == null) return new int[0];
+        int[] arr = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            arr[i] = list.get(i);
+        }
+        return arr;
+    }
+
+    // 237. Remove duplicates from a list while preserving order
+    public static <T> List<T> removeDuplicates_237(List<T> list) {
+        if (list == null) return new ArrayList<>();
+        Set<T> seen = new LinkedHashSet<>();
+        seen.addAll(list);
+        return new ArrayList<>(seen);
+    }
+
+    // 238. Check if a string is a valid email address (simple regex)
+    public static boolean isValidEmail_238(String email) {
+        if (email == null) return false;
+        return email.matches("^[\\w._%+-]+@[\\w.-]+\\.[A-Za-z]{2,6}$");
+    }
+
+    // 239. Generate MD5 hash of a string
+    public static String md5Hash_239(String input) {
+        if (input == null) return null;
+        try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+            byte[] bytes = md.digest(input.getBytes("UTF-8"));
+            StringBuilder sb = new StringBuilder();
+            for (byte b : bytes) {
+                sb.append(String.format("%02x", b & 0xff));
+            }
+            return sb.toString();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    // 240. Convert a string to snake_case
+    public static String toSnakeCase_240(String s) {
+        if (s == null) return null;
+        String result = s.replaceAll("([a-z])([A-Z])", "$1_$2");
+        return result.toLowerCase().replaceAll("\\s+", "_");
+    }
+
+    // 241. Generate a UUID string
+    public static String generateUUID_241() {
+        return UUID.randomUUID().toString();
+    }
+
+    // 242. Count vowels in a string
+    public static int countVowels_242(String s) {
+        if (s == null) return 0;
+        int count = 0;
+        for (char c : s.toLowerCase().toCharArray()) {
+            if ("aeiou".indexOf(c) >= 0) count++;
+        }
+        return count;
+    }
+
+    // 243. Count consonants in a string
+    public static int countConsonants_243(String s) {
+        if (s == null) return 0;
+        int count = 0;
+        for (char c : s.toLowerCase().toCharArray()) {
+            if (c >= 'a' && c <= 'z' && "aeiou".indexOf(c) == -1) count++;
+        }
+        return count;
+    }
+
+    // 244. Replace multiple spaces with a single space
+    public static String normalizeSpaces_244(String s) {
+        if (s == null) return null;
+        return s.trim().replaceAll("\\s+", " ");
+    }
+
+    // 245. Get the maximum element in an int array
+    public static int maxInt_245(int[] arr) {
+        if (arr == null || arr.length == 0) throw new IllegalArgumentException("Array empty");
+        int max = arr[0];
+        for (int val : arr) {
+            if (val > max) max = val;
+        }
+        return max;
+    }
+
+    // 246. Get the minimum element in an int array
+    public static int minInt_246(int[] arr) {
+        if (arr == null || arr.length == 0) throw new IllegalArgumentException("Array empty");
+        int min = arr[0];
+        for (int val : arr) {
+            if (val < min) min = val;
+        }
+        return min;
+    }
+
+    // 247. Swap two elements in a list by indices
+    public static <T> void swapElements_247(List<T> list, int i, int j) {
+        if (list == null || i < 0 || j < 0 || i >= list.size() || j >= list.size()) return;
+        T temp = list.get(i);
+        list.set(i, list.get(j));
+        list.set(j, temp);
+    }
+
+    // 248. Check if a string is all uppercase
+    public static boolean isAllUpperCase_248(String s) {
+        if (s == null || s.isEmpty()) return false;
+        return s.equals(s.toUpperCase());
+    }
+
+    // 249. Check if a string is all lowercase
+    public static boolean isAllLowerCase_249(String s) {
+        if (s == null || s.isEmpty()) return false;
+        return s.equals(s.toLowerCase());
+    }
+
+    // 250. Convert a List<Integer> to comma-separated string
+    public static String listIntToCsv_250(List<Integer> list) {
+        if (list == null || list.isEmpty()) return "";
+        StringBuilder sb = new StringBuilder();
+        for (Integer i : list) {
+            sb.append(i).append(",");
+        }
+        sb.setLength(sb.length() - 1);
+        return sb.toString();
+    }
+
+    
 }
