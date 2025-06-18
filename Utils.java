@@ -2060,5 +2060,271 @@ public class Utils {
         return sb.toString();
     }
 
-    
+    // 251. Check if two strings are anagrams of each other
+    public static boolean areAnagrams_251(String s1, String s2) {
+        if (s1 == null || s2 == null) return false;
+        char[] a = s1.replaceAll("\\s+", "").toLowerCase().toCharArray();
+        char[] b = s2.replaceAll("\\s+", "").toLowerCase().toCharArray();
+        if (a.length != b.length) return false;
+        Arrays.sort(a);
+        Arrays.sort(b);
+        return Arrays.equals(a, b);
+    }
+
+    // 252. Reverse an array of integers
+    public static void reverseArray_252(int[] arr) {
+        if (arr == null) return;
+        int i = 0, j = arr.length - 1;
+        while (i < j) {
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+            i++;
+            j--;
+        }
+    }
+
+    // 253. Find the second largest number in an int array
+    public static int secondLargest_253(int[] arr) {
+        if (arr == null || arr.length < 2) throw new IllegalArgumentException("Array too small");
+        int max = Integer.MIN_VALUE;
+        int secondMax = Integer.MIN_VALUE;
+        for (int val : arr) {
+            if (val > max) {
+                secondMax = max;
+                max = val;
+            } else if (val > secondMax && val < max) {
+                secondMax = val;
+            }
+        }
+        if (secondMax == Integer.MIN_VALUE) throw new IllegalArgumentException("No second largest");
+        return secondMax;
+    }
+
+    // 254. Check if a string is palindrome (ignoring case and non-alphanumeric)
+    public static boolean isPalindrome_254(String s) {
+        if (s == null) return false;
+        String filtered = s.replaceAll("[^A-Za-z0-9]", "").toLowerCase();
+        return filtered.equals(new StringBuilder(filtered).reverse().toString());
+    }
+
+    // 255. Remove all whitespace from a string
+    public static String removeWhitespace_255(String s) {
+        if (s == null) return null;
+        return s.replaceAll("\\s+", "");
+    }
+
+    // 256. Count occurrences of a substring in a string
+    public static int countOccurrences_256(String str, String sub) {
+        if (str == null || sub == null || sub.isEmpty()) return 0;
+        int count = 0, idx = 0;
+        while ((idx = str.indexOf(sub, idx)) != -1) {
+            count++;
+            idx += sub.length();
+        }
+        return count;
+    }
+
+    // 257. Get the nth triangular number
+    public static int triangularNumber_257(int n) {
+        if (n < 0) throw new IllegalArgumentException();
+        return n * (n + 1) / 2;
+    }
+
+    // 258. Generate a random alphanumeric string of given length
+    public static String randomAlphaNumeric_258(int length) {
+        if (length <= 0) return "";
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        Random rand = new Random();
+        StringBuilder sb = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            sb.append(chars.charAt(rand.nextInt(chars.length())));
+        }
+        return sb.toString();
+    }
+
+    // 259. Convert seconds to days, hours, minutes, and seconds string
+    public static String secondsToDHMS_259(long totalSeconds) {
+        long days = totalSeconds / 86400;
+        long hours = (totalSeconds % 86400) / 3600;
+        long minutes = (totalSeconds % 3600) / 60;
+        long seconds = totalSeconds % 60;
+        return String.format("%d days %02d:%02d:%02d", days, hours, minutes, seconds);
+    }
+
+    // 260. Check if a number is a perfect square
+    public static boolean isPerfectSquare_260(int n) {
+        if (n < 0) return false;
+        int root = (int) Math.sqrt(n);
+        return root * root == n;
+    }
+
+    // 261. Merge two sorted arrays into a single sorted array
+    public static int[] mergeSortedArrays_261(int[] a, int[] b) {
+        if (a == null) return b == null ? new int[0] : b.clone();
+        if (b == null) return a.clone();
+        int[] merged = new int[a.length + b.length];
+        int i = 0, j = 0, k = 0;
+        while (i < a.length && j < b.length) {
+            if (a[i] <= b[j]) merged[k++] = a[i++];
+            else merged[k++] = b[j++];
+        }
+        while (i < a.length) merged[k++] = a[i++];
+        while (j < b.length) merged[k++] = b[j++];
+        return merged;
+    }
+
+    // 262. Find the mode (most frequent element) in an int array
+    public static Integer mode_262(int[] arr) {
+        if (arr == null || arr.length == 0) return null;
+        Map<Integer, Integer> freq = new HashMap<>();
+        int maxCount = 0;
+        Integer mode = null;
+        for (int num : arr) {
+            int count = freq.getOrDefault(num, 0) + 1;
+            freq.put(num, count);
+            if (count > maxCount) {
+                maxCount = count;
+                mode = num;
+            }
+        }
+        return mode;
+    }
+
+    // 263. Calculate sum of digits in an integer
+    public static int sumOfDigits_263(int n) {
+        n = Math.abs(n);
+        int sum = 0;
+        while (n > 0) {
+            sum += n % 10;
+            n /= 10;
+        }
+        return sum;
+    }
+
+    // 264. Find common elements between two lists
+    public static <T> List<T> commonElements_264(List<T> list1, List<T> list2) {
+        if (list1 == null || list2 == null) return Collections.emptyList();
+        Set<T> set1 = new HashSet<>(list1);
+        List<T> common = new ArrayList<>();
+        for (T item : list2) {
+            if (set1.contains(item)) common.add(item);
+        }
+        return common;
+    }
+
+    // 265. Convert byte array to hex string
+    public static String bytesToHex_265(byte[] bytes) {
+        if (bytes == null) return null;
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("%02x", b & 0xff));
+        }
+        return sb.toString();
+    }
+
+    // 266. Convert hex string to byte array
+    public static byte[] hexToBytes_266(String hex) {
+        if (hex == null) return null;
+        int len = hex.length();
+        if (len % 2 != 0) return null;
+        byte[] data = new byte[len / 2];
+        try {
+            for (int i = 0; i < len; i += 2) {
+                data[i / 2] = (byte) ((Character.digit(hex.charAt(i), 16) << 4)
+                        + Character.digit(hex.charAt(i+1), 16));
+            }
+        } catch (Exception e) {
+            return null;
+        }
+        return data;
+    }
+
+    // 267. Generate SHA-256 hash of a string
+    public static String sha256Hash_267(String input) {
+        if (input == null) return null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] bytes = md.digest(input.getBytes("UTF-8"));
+            return bytesToHex_265(bytes);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    // 268. Get substring between two substrings (first occurrence)
+    public static String substringBetween_268(String text, String start, String end) {
+        if (text == null || start == null || end == null) return null;
+        int startIndex = text.indexOf(start);
+        if (startIndex == -1) return null;
+        startIndex += start.length();
+        int endIndex = text.indexOf(end, startIndex);
+        if (endIndex == -1) return null;
+        return text.substring(startIndex, endIndex);
+    }
+
+    // 269. Convert a list of strings to uppercase
+    public static List<String> toUpperCaseList_269(List<String> list) {
+        if (list == null) return new ArrayList<>();
+        List<String> res = new ArrayList<>();
+        for (String s : list) {
+            res.add(s == null ? null : s.toUpperCase());
+        }
+        return res;
+    }
+
+    // 270. Convert a list of strings to lowercase
+    public static List<String> toLowerCaseList_270(List<String> list) {
+        if (list == null) return new ArrayList<>();
+        List<String> res = new ArrayList<>();
+        for (String s : list) {
+            res.add(s == null ? null : s.toLowerCase());
+        }
+        return res;
+    }
+
+    // 271. Find all indexes of a character in a string
+    public static List<Integer> indexesOfChar_271(String s, char c) {
+        List<Integer> indexes = new ArrayList<>();
+        if (s == null) return indexes;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == c) indexes.add(i);
+        }
+        return indexes;
+    }
+
+    // 272. Check if an int array is sorted ascending
+    public static boolean isSortedAsc_272(int[] arr) {
+        if (arr == null || arr.length <= 1) return true;
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] < arr[i-1]) return false;
+        }
+        return true;
+    }
+
+    // 273. Remove null elements from a list
+    public static <T> List<T> removeNulls_273(List<T> list) {
+        if (list == null) return new ArrayList<>();
+        List<T> res = new ArrayList<>();
+        for (T t : list) {
+            if (t != null) res.add(t);
+        }
+        return res;
+    }
+
+    // 274. Get the length of longest word in a sentence
+    public static int longestWordLength_274(String sentence) {
+        if (sentence == null || sentence.isEmpty()) return 0;
+        String[] words = sentence.split("\\s+");
+        int maxLen = 0;
+        for (String w : words) {
+            if (w.length() > maxLen) maxLen = w.length();
+        }
+        return maxLen;
+    }
+
+    // 275. Generate a random boolean
+    public static boolean randomBoolean_275() {
+        return new Random().nextBoolean();
+    }
 }
