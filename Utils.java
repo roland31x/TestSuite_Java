@@ -4,6 +4,28 @@ import java.text.*;
 import java.util.*;
 import java.util.regex.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.time.YearMonth;
+import java.time.Year;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.Instant;
+import java.time.format.TextStyle;
+
+import java.util.Locale;
+import java.util.Base64;
+import java.util.stream.Collectors;
+
+import java.math.BigInteger;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+import java.security.MessageDigest;
+
+import java.nio.charset.StandardCharsets;
+
 public class Utils {
     public static void greet(String name) {
         System.out.println("Hello from " + name + "!");
@@ -1834,13 +1856,6 @@ public class Utils {
     // 227. Convert camelCase string to Sentence case
     public static String camelToSentence_227(String s) {
         if (s == null) return null;
-        String result = s.replaceAll("([a-z])([A-Z])", "$1 $2");
-        return Character.toUpperCase(result.charAt(0)) + result.substring(1).toLowerCase();
-    }
-
-    // 227. Convert camelCase string to Sentence case
-    public static String camelToSentence_227(String s) {
-        if (s == null || s.isEmpty()) return s;
         String result = s.replaceAll("([a-z])([A-Z])", "$1 $2");
         return Character.toUpperCase(result.charAt(0)) + result.substring(1).toLowerCase();
     }
@@ -3792,7 +3807,7 @@ public class Utils {
     // 452. Count vowels in a string
     public static int countVowels_452(String s) {
         if (s == null) return 0;
-        return (int) s.toLowerCase().chars().filter("aeiou"::indexOf).count();
+        return (int) s.toLowerCase().chars().filter(c -> "aeiou".indexOf(c) != -1).count();
     }
 
     // 453. Count consonants in a string
