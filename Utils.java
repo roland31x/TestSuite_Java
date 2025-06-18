@@ -2545,4 +2545,443 @@ public class Utils {
     public static double degreesToRadians_300(double degrees) {
         return degrees * Math.PI / 180.0;
     }
+
+    // 301. Convert radians to degrees
+    public static double radiansToDegrees_301(double radians) {
+        return radians * 180.0 / Math.PI;
+    }
+
+    // 302. Check if two arrays are equal (same elements in order)
+    public static boolean arraysEqual_302(int[] a, int[] b) {
+        if (a == b) return true;
+        if (a == null || b == null) return false;
+        if (a.length != b.length) return false;
+        for (int i = 0; i < a.length; i++) {
+            if (a[i] != b[i]) return false;
+        }
+        return true;
+    }
+
+    // 303. Capitalize first letter of each sentence in a paragraph
+    public static String capitalizeSentences_303(String paragraph) {
+        if (paragraph == null || paragraph.isEmpty()) return paragraph;
+        String[] sentences = paragraph.split("(?<=[.!?])\\s*");
+        StringBuilder sb = new StringBuilder();
+        for (String sentence : sentences) {
+            if (sentence.length() > 0) {
+                sb.append(Character.toUpperCase(sentence.charAt(0)));
+                sb.append(sentence.substring(1));
+                sb.append(" ");
+            }
+        }
+        return sb.toString().trim();
+    }
+
+    // 304. Flatten a list of lists into a single list
+    public static <T> List<T> flattenListOfLists_304(List<List<T>> listOfLists) {
+        List<T> flat = new ArrayList<>();
+        if (listOfLists == null) return flat;
+        for (List<T> list : listOfLists) {
+            if (list != null) flat.addAll(list);
+        }
+        return flat;
+    }
+
+    // 305. Find the maximum value in an int array
+    public static int maxInArray_305(int[] arr) {
+        if (arr == null || arr.length == 0) throw new IllegalArgumentException("Empty array");
+        int max = arr[0];
+        for (int val : arr) {
+            if (val > max) max = val;
+        }
+        return max;
+    }
+
+    // 306. Find the minimum value in an int array
+    public static int minInArray_306(int[] arr) {
+        if (arr == null || arr.length == 0) throw new IllegalArgumentException("Empty array");
+        int min = arr[0];
+        for (int val : arr) {
+            if (val < min) min = val;
+        }
+        return min;
+    }
+
+    // 307. Remove duplicates from a list, preserving order
+    public static <T> List<T> removeDuplicates_307(List<T> list) {
+        if (list == null) return new ArrayList<>();
+        Set<T> seen = new LinkedHashSet<>(list);
+        return new ArrayList<>(seen);
+    }
+
+    // 308. Repeat a string n times
+    public static String repeatString_308(String s, int n) {
+        if (s == null) return null;
+        if (n <= 0) return "";
+        StringBuilder sb = new StringBuilder(s.length() * n);
+        for (int i = 0; i < n; i++) {
+            sb.append(s);
+        }
+        return sb.toString();
+    }
+
+    // 309. Convert a list of integers to an int array
+    public static int[] listToIntArray_309(List<Integer> list) {
+        if (list == null) return new int[0];
+        int[] arr = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            arr[i] = list.get(i);
+        }
+        return arr;
+    }
+
+    // 310. Check if a string is numeric (integer)
+    public static boolean isNumeric_310(String s) {
+        if (s == null || s.isEmpty()) return false;
+        return s.matches("-?\\d+");
+    }
+
+    // 311. Calculate the nth Fibonacci number (iterative)
+    public static long fibonacci_311(int n) {
+        if (n < 0) throw new IllegalArgumentException("Negative");
+        if (n == 0) return 0;
+        if (n == 1) return 1;
+        long a = 0, b = 1;
+        for (int i = 2; i <= n; i++) {
+            long temp = a + b;
+            a = b;
+            b = temp;
+        }
+        return b;
+    }
+
+    // 312. Convert a character to its ASCII integer value
+    public static int charToAscii_312(char c) {
+        return (int) c;
+    }
+
+    // 313. Convert an ASCII integer value to a character
+    public static char asciiToChar_313(int ascii) {
+        return (char) ascii;
+    }
+
+    // 314. Check if a year is a leap year
+    public static boolean isLeapYear_314(int year) {
+        if (year % 400 == 0) return true;
+        if (year % 100 == 0) return false;
+        return year % 4 == 0;
+    }
+
+    // 315. Convert string to int safely (returns default if fails)
+    public static int parseIntOrDefault_315(String s, int defaultValue) {
+        if (s == null) return defaultValue;
+        try {
+            return Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
+    }
+
+    // 316. Check if a string contains only digits
+    public static boolean isDigitsOnly_316(String s) {
+        if (s == null || s.isEmpty()) return false;
+        return s.matches("\\d+");
+    }
+
+    // 317. Calculate the Euclidean distance between two points
+    public static double euclideanDistance_317(double x1, double y1, double x2, double y2) {
+        double dx = x1 - x2;
+        double dy = y1 - y2;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    // 318. Count words in a string
+    public static int countWords_318(String s) {
+        if (s == null || s.trim().isEmpty()) return 0;
+        return s.trim().split("\\s+").length;
+    }
+
+    // 319. Reverse the words in a sentence
+    public static String reverseWords_319(String sentence) {
+        if (sentence == null || sentence.isEmpty()) return sentence;
+        String[] words = sentence.split("\\s+");
+        Collections.reverse(Arrays.asList(words));
+        return String.join(" ", words);
+    }
+
+    // 320. Find the longest common prefix between two strings
+    public static String longestCommonPrefix_320(String s1, String s2) {
+        if (s1 == null || s2 == null) return "";
+        int minLen = Math.min(s1.length(), s2.length());
+        int i = 0;
+        while (i < minLen && s1.charAt(i) == s2.charAt(i)) {
+            i++;
+        }
+        return s1.substring(0, i);
+    }
+
+    // 321. Remove all vowels from a string
+    public static String removeVowels_321(String s) {
+        if (s == null) return null;
+        return s.replaceAll("[aeiouAEIOU]", "");
+    }
+
+    // 322. Check if two lists are permutations of each other
+    public static <T> boolean arePermutations_322(List<T> list1, List<T> list2) {
+        if (list1 == null || list2 == null) return false;
+        if (list1.size() != list2.size()) return false;
+        List<T> copy1 = new ArrayList<>(list1);
+        List<T> copy2 = new ArrayList<>(list2);
+        Collections.sort((List)copy1);
+        Collections.sort((List)copy2);
+        return copy1.equals(copy2);
+    }
+
+    // 323. Get the factorial of a number recursively
+    public static long factorialRec_323(int n) {
+        if (n < 0) throw new IllegalArgumentException("Negative");
+        if (n <= 1) return 1;
+        return n * factorialRec_323(n - 1);
+    }
+
+    // 324. Replace all occurrences of a substring with another string
+    public static String replaceAll_324(String text, String target, String replacement) {
+        if (text == null || target == null || replacement == null) return text;
+        return text.replace(target, replacement);
+    }
+
+    // 325. Check if a string starts with a vowel
+    public static boolean startsWithVowel_325(String s) {
+        if (s == null || s.isEmpty()) return false;
+        return s.toLowerCase().matches("^[aeiou].*");
+    }
+
+    // 326. Get the initials from a full name
+    public static String getInitials_326(String fullName) {
+        if (fullName == null || fullName.trim().isEmpty()) return "";
+        String[] parts = fullName.trim().split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for (String p : parts) {
+            if (!p.isEmpty()) sb.append(Character.toUpperCase(p.charAt(0)));
+        }
+        return sb.toString();
+    }
+
+    // 327. Calculate the power of a number (base^exponent)
+    public static double power_327(double base, int exponent) {
+        return Math.pow(base, exponent);
+    }
+
+    // 328. Check if a number is a palindrome (e.g., 121)
+    public static boolean isNumberPalindrome_328(int num) {
+        String s = String.valueOf(num);
+        return s.equals(new StringBuilder(s).reverse().toString());
+    }
+
+    // 329. Get current timestamp in milliseconds
+    public static long currentTimestamp_329() {
+        return System.currentTimeMillis();
+    }
+
+    // 330. Convert a decimal number to hexadecimal string
+    public static String decimalToHex_330(int num) {
+        return Integer.toHexString(num);
+    }
+
+    // 331. Convert a hexadecimal string to decimal number
+    public static int hexToDecimal_331(String hex) {
+        if (hex == null) throw new IllegalArgumentException("Null");
+        return Integer.parseInt(hex, 16);
+    }
+
+    // 332. Find all prime numbers up to n using Sieve of Eratosthenes
+    public static List<Integer> primesUpTo_332(int n) {
+        List<Integer> primes = new ArrayList<>();
+        if (n < 2) return primes;
+        boolean[] isPrime = new boolean[n + 1];
+        Arrays.fill(isPrime, true);
+        isPrime[0] = false;
+        isPrime[1] = false;
+        for (int i = 2; i * i <= n; i++) {
+            if (isPrime[i]) {
+                for (int j = i * i; j <= n; j += i) {
+                    isPrime[j] = false;
+                }
+            }
+        }
+        for (int i = 2; i <= n; i++) {
+            if (isPrime[i]) primes.add(i);
+        }
+        return primes;
+    }
+
+    // 333. Reverse an int array in place
+    public static void reverseArray_333(int[] arr) {
+        if (arr == null) return;
+        int left = 0, right = arr.length - 1;
+        while (left < right) {
+            int temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
+            left++;
+            right--;
+        }
+    }
+
+    // 334. Find the second largest number in an int array
+    public static int secondLargest_334(int[] arr) {
+        if (arr == null || arr.length < 2) throw new IllegalArgumentException("Array too small");
+        int max = Integer.MIN_VALUE;
+        int secondMax = Integer.MIN_VALUE;
+        for (int val : arr) {
+            if (val > max) {
+                secondMax = max;
+                max = val;
+            } else if (val > secondMax && val != max) {
+                secondMax = val;
+            }
+        }
+        if (secondMax == Integer.MIN_VALUE) throw new IllegalArgumentException("No second largest found");
+        return secondMax;
+    }
+
+    // 335. Check if two strings are anagrams
+    public static boolean areAnagrams_335(String s1, String s2) {
+        if (s1 == null || s2 == null) return false;
+        char[] a1 = s1.replaceAll("\\s", "").toLowerCase().toCharArray();
+        char[] a2 = s2.replaceAll("\\s", "").toLowerCase().toCharArray();
+        Arrays.sort(a1);
+        Arrays.sort(a2);
+        return Arrays.equals(a1, a2);
+    }
+
+    // 336. Get the number of occurrences of a character in a string
+    public static int countCharOccurrences_336(String s, char c) {
+        if (s == null) return 0;
+        int count = 0;
+        for (char ch : s.toCharArray()) {
+            if (ch == c) count++;
+        }
+        return count;
+    }
+
+    // 337. Generate a UUID string
+    public static String generateUUID_337() {
+        return UUID.randomUUID().toString();
+    }
+
+    // 338. Convert a list of strings to uppercase
+    public static List<String> toUpperCaseList_338(List<String> list) {
+        if (list == null) return new ArrayList<>();
+        List<String> result = new ArrayList<>();
+        for (String s : list) {
+            result.add(s == null ? null : s.toUpperCase());
+        }
+        return result;
+    }
+
+    // 339. Convert list of strings to lowercase
+    public static List<String> toLowerCaseList_339(List<String> list) {
+        if (list == null) return new ArrayList<>();
+        List<String> result = new ArrayList<>();
+        for (String s : list) {
+            result.add(s == null ? null : s.toLowerCase());
+        }
+        return result;
+    }
+
+    // 340. Get factorial digits count (number of digits in n!)
+    public static int factorialDigitCount_340(int n) {
+        if (n < 0) throw new IllegalArgumentException("Negative");
+        if (n <= 1) return 1;
+        double digits = 0;
+        for (int i = 2; i <= n; i++) {
+            digits += Math.log10(i);
+        }
+        return (int) digits + 1;
+    }
+
+    // 341. Check if string is a palindrome (ignoring case and non-alphanumeric)
+    public static boolean isPalindrome_341(String s) {
+        if (s == null) return false;
+        String filtered = s.replaceAll("[^A-Za-z0-9]", "").toLowerCase();
+        return filtered.equals(new StringBuilder(filtered).reverse().toString());
+    }
+
+    // 342. Convert a list of integers to a comma-separated string
+    public static String listToCommaSeparated_342(List<Integer> list) {
+        if (list == null || list.isEmpty()) return "";
+        StringBuilder sb = new StringBuilder();
+        for (Integer i : list) {
+            sb.append(i).append(",");
+        }
+        sb.setLength(sb.length() - 1);
+        return sb.toString();
+    }
+
+    // 343. Generate a random alphanumeric string of given length
+    public static String randomAlphanumeric_343(int length) {
+        if (length <= 0) return "";
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        Random rnd = new Random();
+        StringBuilder sb = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            sb.append(chars.charAt(rnd.nextInt(chars.length())));
+        }
+        return sb.toString();
+    }
+
+    // 344. Check if a string contains any whitespace
+    public static boolean containsWhitespace_344(String s) {
+        if (s == null) return false;
+        return s.matches(".*\\s.*");
+    }
+
+    // 345. Convert a boolean to "Yes" or "No"
+    public static String booleanToYesNo_345(boolean b) {
+        return b ? "Yes" : "No";
+    }
+
+    // 346. Compute the sum of digits of an integer
+    public static int sumOfDigits_346(int num) {
+        num = Math.abs(num);
+        int sum = 0;
+        while (num > 0) {
+            sum += num % 10;
+            num /= 10;
+        }
+        return sum;
+    }
+
+    // 347. Check if a number is a power of two
+    public static boolean isPowerOfTwo_347(int n) {
+        return n > 0 && (n & (n - 1)) == 0;
+    }
+
+    // 348. Get substring between two indices safely
+    public static String safeSubstring_348(String s, int start, int end) {
+        if (s == null) return null;
+        if (start < 0) start = 0;
+        if (end > s.length()) end = s.length();
+        if (start > end) return "";
+        return s.substring(start, end);
+    }
+
+    // 349. Convert an array of integers to a List<Integer>
+    public static List<Integer> intArrayToList_349(int[] arr) {
+        List<Integer> list = new ArrayList<>();
+        if (arr == null) return list;
+        for (int v : arr) list.add(v);
+        return list;
+    }
+
+    // 350. Compute the average of integers in a list
+    public static double averageIntList_350(List<Integer> list) {
+        if (list == null || list.isEmpty()) throw new IllegalArgumentException("Empty list");
+        double sum = 0;
+        for (Integer i : list) {
+            sum += i;
+        }
+        return sum / list.size();
+    }
 }
