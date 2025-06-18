@@ -1168,4 +1168,443 @@ public class Utils {
         if (dotIndex == -1 || dotIndex == filename.length() - 1) return "";
         return filename.substring(dotIndex + 1);
     }
+
+    // 151. Capitalize the first letter of each word in a string
+    public static String capitalizeWords_151(String s) {
+        if (s == null || s.isEmpty()) return s;
+        String[] words = s.split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for (String word : words) {
+            if (word.length() > 0) {
+                sb.append(Character.toUpperCase(word.charAt(0)));
+                sb.append(word.substring(1).toLowerCase());
+            }
+            sb.append(" ");
+        }
+        return sb.toString().trim();
+    }
+
+    // 152. Check if a string is a valid email address
+    public static boolean isValidEmail_152(String email) {
+        if (email == null) return false;
+        String emailRegex = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
+        return Pattern.matches(emailRegex, email);
+    }
+
+    // 153. Generate a random alphanumeric string of given length
+    public static String randomAlphaNumeric_153(int length) {
+        if (length <= 0) return "";
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        Random rand = new Random();
+        StringBuilder sb = new StringBuilder(length);
+        for (int i=0; i<length; i++) {
+            sb.append(chars.charAt(rand.nextInt(chars.length())));
+        }
+        return sb.toString();
+    }
+
+    // 154. Convert string to integer with default value
+    public static int toIntOrDefault_154(String s, int defaultValue) {
+        if (s == null) return defaultValue;
+        try {
+            return Integer.parseInt(s.trim());
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
+    }
+
+    // 155. Convert string to double with default value
+    public static double toDoubleOrDefault_155(String s, double defaultValue) {
+        if (s == null) return defaultValue;
+        try {
+            return Double.parseDouble(s.trim());
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
+    }
+
+    // 156. Check if string contains only digits
+    public static boolean isDigitsOnly_156(String s) {
+        if (s == null) return false;
+        return s.matches("\\d+");
+    }
+
+    // 157. Convert a collection to a comma-separated string
+    public static <T> String joinCollection_157(Collection<T> coll) {
+        if (coll == null || coll.isEmpty()) return "";
+        StringBuilder sb = new StringBuilder();
+        for (T item : coll) {
+            sb.append(item).append(",");
+        }
+        sb.setLength(sb.length() - 1);
+        return sb.toString();
+    }
+
+    // 158. Generate MD5 hash of a string
+    public static String md5Hash_158(String input) {
+        if (input == null) return null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] digest = md.digest(input.getBytes("UTF-8"));
+            BigInteger number = new BigInteger(1, digest);
+            return String.format("%032x", number);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    // 159. Generate SHA-256 hash of a string
+    public static String sha256Hash_159(String input) {
+        if (input == null) return null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] digest = md.digest(input.getBytes("UTF-8"));
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : digest) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    // 160. Generate a UUID string
+    public static String generateUUID_160() {
+        return UUID.randomUUID().toString();
+    }
+
+    // 161. Check if a string is a valid URL
+    public static boolean isValidUrl_161(String url) {
+        if (url == null) return false;
+        String regex = "^(https?|ftp)://[^\\s/$.?#].[^\\s]*$";
+        return Pattern.matches(regex, url);
+    }
+
+    // 162. Count occurrences of a substring in a string
+    public static int countOccurrences_162(String str, String sub) {
+        if (str == null || sub == null || sub.isEmpty()) return 0;
+        int count = 0, idx = 0;
+        while ((idx = str.indexOf(sub, idx)) != -1) {
+            count++;
+            idx += sub.length();
+        }
+        return count;
+    }
+
+    // 163. Remove duplicates from an int array
+    public static int[] removeDuplicates_163(int[] arr) {
+        if (arr == null) return new int[0];
+        return Arrays.stream(arr).distinct().toArray();
+    }
+
+    // 164. Reverse an int array in-place
+    public static void reverseArray_164(int[] arr) {
+        if (arr == null) return;
+        int left = 0, right = arr.length - 1;
+        while (left < right) {
+            int temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
+            left++;
+            right--;
+        }
+    }
+
+    // 165. Check if a string is numeric (including decimals)
+    public static boolean isNumeric_165(String s) {
+        if (s == null) return false;
+        return s.matches("-?\\d+(\\.\\d+)?");
+    }
+
+    // 166. Get substring between two delimiters
+    public static String substringBetween_166(String s, String start, String end) {
+        if (s == null || start == null || end == null) return null;
+        int startIdx = s.indexOf(start);
+        if (startIdx == -1) return null;
+        int endIdx = s.indexOf(end, startIdx + start.length());
+        if (endIdx == -1) return null;
+        return s.substring(startIdx + start.length(), endIdx);
+    }
+
+    // 167. Convert camelCase to snake_case
+    public static String camelToSnake_167(String s) {
+        if (s == null) return null;
+        return s.replaceAll("([a-z])([A-Z])", "$1_$2").toLowerCase();
+    }
+
+    // 168. Convert snake_case to camelCase
+    public static String snakeToCamel_168(String s) {
+        if (s == null) return null;
+        String[] parts = s.split("_");
+        StringBuilder camel = new StringBuilder();
+        camel.append(parts[0].toLowerCase());
+        for (int i=1; i<parts.length; i++) {
+            camel.append(parts[i].substring(0,1).toUpperCase());
+            camel.append(parts[i].substring(1).toLowerCase());
+        }
+        return camel.toString();
+    }
+
+    // 169. Shuffle elements in a list
+    public static <T> void shuffleList_169(List<T> list) {
+        if (list == null) return;
+        Collections.shuffle(list);
+    }
+
+    // 170. Check if string is a valid IPv4 address
+    public static boolean isValidIPv4_170(String ip) {
+        if (ip == null) return false;
+        String ipv4Regex = "^((25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)$";
+        return Pattern.matches(ipv4Regex, ip);
+    }
+
+    // 171. Convert a List of Integers to int array
+    public static int[] listToIntArray_171(List<Integer> list) {
+        if (list == null) return new int[0];
+        int[] arr = new int[list.size()];
+        for (int i=0; i<list.size(); i++) {
+            arr[i] = list.get(i);
+        }
+        return arr;
+    }
+
+    // 172. Convert int array to List<Integer>
+    public static List<Integer> intArrayToList_172(int[] arr) {
+        if (arr == null) return new ArrayList<>();
+        List<Integer> list = new ArrayList<>(arr.length);
+        for (int v : arr) list.add(v);
+        return list;
+    }
+
+    // 173. Format bytes as human-readable string (KB, MB, GB)
+    public static String formatBytes_173(long bytes) {
+        if (bytes < 1024) return bytes + " B";
+        int exp = (int) (Math.log(bytes) / Math.log(1024));
+        char unit = "KMGTPE".charAt(exp - 1);
+        return String.format("%.1f %sB", bytes / Math.pow(1024, exp), unit);
+    }
+
+    // 174. Get the file name without extension
+    public static String getFileNameWithoutExtension_174(String filename) {
+        if (filename == null) return null;
+        int dotIndex = filename.lastIndexOf('.');
+        if (dotIndex == -1) return filename;
+        return filename.substring(0, dotIndex);
+    }
+
+    // 175. Get file size in bytes
+    public static long getFileSize_175(String filePath) {
+        if (filePath == null) return 0;
+        File file = new File(filePath);
+        return file.exists() ? file.length() : 0;
+    }
+
+    // 176. Convert milliseconds to formatted duration string (e.g., "1h 3m 5s")
+    public static String formatDuration_176(long millis) {
+        long seconds = millis / 1000;
+        long hours = seconds / 3600;
+        long minutes = (seconds % 3600) / 60;
+        long secs = seconds % 60;
+        StringBuilder sb = new StringBuilder();
+        if (hours > 0) sb.append(hours).append("h ");
+        if (minutes > 0) sb.append(minutes).append("m ");
+        sb.append(secs).append("s");
+        return sb.toString().trim();
+    }
+
+    // 177. Check if a string contains only letters and digits
+    public static boolean isAlphanumeric_177(String s) {
+        if (s == null) return false;
+        return s.matches("[A-Za-z0-9]+");
+    }
+
+    // 178. Remove all special characters from a string (keep letters and digits)
+    public static String removeSpecialCharacters_178(String s) {
+        if (s == null) return null;
+        return s.replaceAll("[^A-Za-z0-9]", "");
+    }
+
+    // 179. Repeat a string N times
+    public static String repeatString_179(String s, int times) {
+        if (s == null || times <= 0) return "";
+        return s.repeat(times);
+    }
+
+    // 180. Get random element from list
+    public static <T> T getRandomElement_180(List<T> list) {
+        if (list == null || list.isEmpty()) return null;
+        Random rand = new Random();
+        return list.get(rand.nextInt(list.size()));
+    }
+
+    // 181. Calculate factorial of a number
+    public static long factorial_181(int n) {
+        if (n < 0) throw new IllegalArgumentException("Negative number");
+        long result = 1;
+        for (int i=2; i<=n; i++) {
+            result *= i;
+        }
+        return result;
+    }
+
+    // 182. Check if year is a leap year
+    public static boolean isLeapYear_182(int year) {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+    }
+
+    // 183. Convert integer to binary string
+    public static String toBinaryString_183(int n) {
+        return Integer.toBinaryString(n);
+    }
+
+    // 184. Convert integer to hex string
+    public static String toHexString_184(int n) {
+        return Integer.toHexString(n);
+    }
+
+    // 185. Convert hex string to integer
+    public static int hexStringToInt_185(String hex) {
+        if (hex == null) return 0;
+        try {
+            return Integer.parseInt(hex, 16);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
+    // 186. Remove duplicate words in a sentence
+    public static String removeDuplicateWords_186(String s) {
+        if (s == null) return null;
+        String[] words = s.split("\\s+");
+        LinkedHashSet<String> set = new LinkedHashSet<>(Arrays.asList(words));
+        return String.join(" ", set);
+    }
+
+    // 187. Convert list to string with custom delimiter
+    public static <T> String listToString_187(List<T> list, String delimiter) {
+        if (list == null || list.isEmpty()) return "";
+        if (delimiter == null) delimiter = ",";
+        StringBuilder sb = new StringBuilder();
+        for (T item : list) {
+            sb.append(item).append(delimiter);
+        }
+        sb.setLength(sb.length() - delimiter.length());
+        return sb.toString();
+    }
+
+    // 188. Find index of max element in int array
+    public static int indexOfMax_188(int[] arr) {
+        if (arr == null || arr.length == 0) return -1;
+        int maxIndex = 0;
+        for (int i=1; i<arr.length; i++) {
+            if (arr[i] > arr[maxIndex]) maxIndex = i;
+        }
+        return maxIndex;
+    }
+
+    // 189. Find index of min element in int array
+    public static int indexOfMin_189(int[] arr) {
+        if (arr == null || arr.length == 0) return -1;
+        int minIndex = 0;
+        for (int i=1; i<arr.length; i++) {
+            if (arr[i] < arr[minIndex]) minIndex = i;
+        }
+        return minIndex;
+    }
+
+    // 190. Clamp a number between min and max
+    public static int clamp_190(int value, int min, int max) {
+        if (min > max) throw new IllegalArgumentException("min > max");
+        return Math.max(min, Math.min(max, value));
+    }
+
+    // 191. Format double as percentage string with 2 decimals
+    public static String formatPercentage_191(double value) {
+        return String.format("%.2f%%", value * 100);
+    }
+
+    // 192. Convert seconds to readable format "Xd Yh Zm Ws"
+    public static String formatSecondsDetailed_192(long seconds) {
+        long days = seconds / 86400;
+        long hours = (seconds % 86400) / 3600;
+        long minutes = (seconds % 3600) / 60;
+        long secs = seconds % 60;
+        StringBuilder sb = new StringBuilder();
+        if (days > 0) sb.append(days).append("d ");
+        if (hours > 0) sb.append(hours).append("h ");
+        if (minutes > 0) sb.append(minutes).append("m ");
+        sb.append(secs).append("s");
+        return sb.toString().trim();
+    }
+
+    // 193. Check if a string is a palindrome (case-insensitive, ignore spaces)
+    public static boolean isPalindrome_193(String s) {
+        if (s == null) return false;
+        String cleaned = s.replaceAll("\\s+", "").toLowerCase();
+        int left = 0, right = cleaned.length() - 1;
+        while (left < right) {
+            if (cleaned.charAt(left) != cleaned.charAt(right)) return false;
+            left++;
+            right--;
+        }
+        return true;
+    }
+
+    // 194. Convert RGB components to hex color string
+    public static String rgbToHex_194(int r, int g, int b) {
+        r = clamp_190(r, 0, 255);
+        g = clamp_190(g, 0, 255);
+        b = clamp_190(b, 0, 255);
+        return String.format("#%02X%02X%02X", r, g, b);
+    }
+
+    // 195. Convert hex color string to RGB int array [r, g, b]
+    public static int[] hexToRgb_195(String hex) {
+        if (hex == null) return null;
+        hex = hex.replace("#", "");
+        if (hex.length() != 6) return null;
+        try {
+            int r = Integer.parseInt(hex.substring(0, 2), 16);
+            int g = Integer.parseInt(hex.substring(2, 4), 16);
+            int b = Integer.parseInt(hex.substring(4, 6), 16);
+            return new int[]{r, g, b};
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
+    // 196. Get current timestamp in milliseconds
+    public static long currentTimestampMillis_196() {
+        return System.currentTimeMillis();
+    }
+
+    // 197. Sleep for given milliseconds, ignoring InterruptedException
+    public static void sleepMillis_197(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException ignored) {
+        }
+    }
+
+    // 198. Convert List<String> to Set<String>
+    public static Set<String> listToSet_198(List<String> list) {
+        if (list == null) return new HashSet<>();
+        return new HashSet<>(list);
+    }
+
+    // 199. Reverse a string
+    public static String reverseString_199(String s) {
+        if (s == null) return null;
+        return new StringBuilder(s).reverse().toString();
+    }
+
+    // 200. Extract digits from a string (return as concatenated string)
+    public static String extractDigits_200(String s) {
+        if (s == null) return "";
+        return s.replaceAll("\\D+", "");
+    }
+
 }
