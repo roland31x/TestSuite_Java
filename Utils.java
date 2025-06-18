@@ -2984,4 +2984,433 @@ public class Utils {
         }
         return sum / list.size();
     }
+
+     // 351. Count the number of lines in a string
+    public static int countLines_351(String s) {
+        if (s == null || s.isEmpty()) return 0;
+        return s.split("\r\n|\r|\n").length;
+    }
+
+    // 352. Remove punctuation from a string
+    public static String removePunctuation_352(String s) {
+        if (s == null) return null;
+        return s.replaceAll("\\p{Punct}", "");
+    }
+
+    // 353. Get current day of the week
+    public static String currentDayOfWeek_353() {
+        return java.time.LocalDate.now().getDayOfWeek().toString();
+    }
+
+    // 354. Check if string is a valid hex color code
+    public static boolean isValidHexColor_354(String s) {
+        return s != null && s.matches("^#?[0-9A-Fa-f]{6}$");
+    }
+
+    // 355. Convert boolean to 1 (true) or 0 (false)
+    public static int booleanToInt_355(boolean b) {
+        return b ? 1 : 0;
+    }
+
+    // 356. Get first non-repeating character in a string
+    public static Character firstNonRepeatingChar_356(String s) {
+        if (s == null) return null;
+        Map<Character, Integer> counts = new LinkedHashMap<>();
+        for (char c : s.toCharArray()) {
+            counts.put(c, counts.getOrDefault(c, 0) + 1);
+        }
+        for (Map.Entry<Character, Integer> entry : counts.entrySet()) {
+            if (entry.getValue() == 1) return entry.getKey();
+        }
+        return null;
+    }
+
+    // 357. Count the number of true values in a boolean array
+    public static int countTrue_357(boolean[] arr) {
+        if (arr == null) return 0;
+        int count = 0;
+        for (boolean b : arr) {
+            if (b) count++;
+        }
+        return count;
+    }
+
+    // 358. Check if a string is in camelCase
+    public static boolean isCamelCase_358(String s) {
+        return s != null && s.matches("^[a-z]+([A-Z][a-z0-9]*)*$");
+    }
+
+    // 359. Count occurrences of a word in a sentence
+    public static int countWordOccurrences_359(String sentence, String word) {
+        if (sentence == null || word == null) return 0;
+        String[] tokens = sentence.split("\\s+");
+        int count = 0;
+        for (String token : tokens) {
+            if (token.equals(word)) count++;
+        }
+        return count;
+    }
+
+    // 360. Sort a list of strings ignoring case
+    public static List<String> sortIgnoreCase_360(List<String> list) {
+        if (list == null) return new ArrayList<>();
+        list.sort(String.CASE_INSENSITIVE_ORDER);
+        return list;
+    }
+
+    // 361. Remove nulls from a list
+    public static <T> List<T> removeNulls_361(List<T> list) {
+        if (list == null) return new ArrayList<>();
+        List<T> cleaned = new ArrayList<>();
+        for (T item : list) {
+            if (item != null) cleaned.add(item);
+        }
+        return cleaned;
+    }
+
+    // 362. Find the most frequent character in a string
+    public static Character mostFrequentChar_362(String s) {
+        if (s == null || s.isEmpty()) return null;
+        Map<Character, Integer> map = new HashMap<>();
+        for (char c : s.toCharArray()) {
+            map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+        return map.entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
+    }
+
+    // 363. Shuffle a list
+    public static <T> void shuffleList_363(List<T> list) {
+        if (list != null) Collections.shuffle(list);
+    }
+
+    // 364. Pad string with zeros on the left
+    public static String padLeftZeros_364(String s, int length) {
+        if (s == null) return null;
+        return String.format("%" + length + "s", s).replace(' ', '0');
+    }
+
+    // 365. Get all substrings of a string
+    public static List<String> getAllSubstrings_365(String s) {
+        List<String> substrings = new ArrayList<>();
+        if (s == null) return substrings;
+        int len = s.length();
+        for (int i = 0; i < len; i++) {
+            for (int j = i + 1; j <= len; j++) {
+                substrings.add(s.substring(i, j));
+            }
+        }
+        return substrings;
+    }
+
+    // 366. Check if string contains only alphabets
+    public static boolean isAlpha_366(String s) {
+        return s != null && s.matches("^[A-Za-z]+$");
+    }
+
+    // 367. Check if list is sorted ascending
+    public static <T extends Comparable<T>> boolean isSortedAscending_367(List<T> list) {
+        if (list == null || list.size() < 2) return true;
+        for (int i = 1; i < list.size(); i++) {
+            if (list.get(i).compareTo(list.get(i - 1)) < 0) return false;
+        }
+        return true;
+    }
+
+    // 368. Create a map from two lists (keys and values)
+    public static <K, V> Map<K, V> zipToMap_368(List<K> keys, List<V> values) {
+        Map<K, V> map = new HashMap<>();
+        if (keys == null || values == null) return map;
+        for (int i = 0; i < Math.min(keys.size(), values.size()); i++) {
+            map.put(keys.get(i), values.get(i));
+        }
+        return map;
+    }
+
+    // 369. Remove duplicate characters from a string
+    public static String removeDuplicateChars_369(String s) {
+        if (s == null) return null;
+        StringBuilder sb = new StringBuilder();
+        Set<Character> seen = new HashSet<>();
+        for (char c : s.toCharArray()) {
+            if (!seen.contains(c)) {
+                seen.add(c);
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+
+    // 370. Truncate string to a certain length with ellipsis
+    public static String truncateWithEllipsis_370(String s, int maxLength) {
+        if (s == null || maxLength <= 0) return "";
+        if (s.length() <= maxLength) return s;
+        return s.substring(0, maxLength - 3) + "...";
+    }
+
+    // 371. Convert a string to binary representation
+    public static String stringToBinary_371(String s) {
+        if (s == null) return null;
+        StringBuilder sb = new StringBuilder();
+        for (char c : s.toCharArray()) {
+            sb.append(String.format("%8s", Integer.toBinaryString(c)).replace(' ', '0')).append(" ");
+        }
+        return sb.toString().trim();
+    }
+
+    // 372. Convert binary string to ASCII
+    public static String binaryToString_372(String binary) {
+        if (binary == null || binary.isEmpty()) return "";
+        String[] binaries = binary.split(" ");
+        StringBuilder sb = new StringBuilder();
+        for (String b : binaries) {
+            sb.append((char) Integer.parseInt(b, 2));
+        }
+        return sb.toString();
+    }
+
+    // 373. Count uppercase letters in a string
+    public static int countUppercase_373(String s) {
+        if (s == null) return 0;
+        int count = 0;
+        for (char c : s.toCharArray()) {
+            if (Character.isUpperCase(c)) count++;
+        }
+        return count;
+    }
+
+    // 374. Get common elements from two lists
+    public static <T> List<T> getCommonElements_374(List<T> a, List<T> b) {
+        if (a == null || b == null) return new ArrayList<>();
+        Set<T> setA = new HashSet<>(a);
+        List<T> result = new ArrayList<>();
+        for (T item : b) {
+            if (setA.contains(item)) result.add(item);
+        }
+        return result;
+    }
+
+    // 375. Normalize whitespace in a string
+    public static String normalizeWhitespace_375(String s) {
+        if (s == null) return null;
+        return s.trim().replaceAll("\\s+", " ");
+    }
+
+    // 376. Get ordinal suffix of an integer (e.g., 1st, 2nd)
+    public static String ordinalSuffix_376(int number) {
+        if (number % 100 >= 11 && number % 100 <= 13) return number + "th";
+        switch (number % 10) {
+            case 1: return number + "st";
+            case 2: return number + "nd";
+            case 3: return number + "rd";
+            default: return number + "th";
+        }
+    }
+
+    // 377. Check if string is null or empty
+    public static boolean isNullOrEmpty_377(String s) {
+        return s == null || s.isEmpty();
+    }
+
+    // 378. Count characters in a string
+    public static int countCharacters_378(String s) {
+        return s == null ? 0 : s.length();
+    }
+
+    // 379. Convert list of booleans to string of 1s and 0s
+    public static String boolListToBinaryString_379(List<Boolean> list) {
+        if (list == null) return "";
+        StringBuilder sb = new StringBuilder();
+        for (Boolean b : list) {
+            sb.append(b != null && b ? "1" : "0");
+        }
+        return sb.toString();
+    }
+
+    // 380. Split a list into chunks
+    public static <T> List<List<T>> chunkList_380(List<T> list, int chunkSize) {
+        List<List<T>> chunks = new ArrayList<>();
+        if (list == null || chunkSize <= 0) return chunks;
+        for (int i = 0; i < list.size(); i += chunkSize) {
+            chunks.add(list.subList(i, Math.min(i + chunkSize, list.size())));
+        }
+        return chunks;
+    }
+
+    // 381. Compare two strings ignoring case and spaces
+    public static boolean compareIgnoreCaseAndSpaces_381(String a, String b) {
+        if (a == null || b == null) return false;
+        return a.replaceAll("\\s+", "").equalsIgnoreCase(b.replaceAll("\\s+", ""));
+    }
+
+    // 382. Return true if all characters in a string are unique
+    public static boolean allUniqueChars_382(String s) {
+        if (s == null) return false;
+        Set<Character> chars = new HashSet<>();
+        for (char c : s.toCharArray()) {
+            if (!chars.add(c)) return false;
+        }
+        return true;
+    }
+
+    // 383. Return max string length from list
+    public static int maxStringLength_383(List<String> list) {
+        if (list == null || list.isEmpty()) return 0;
+        int max = 0;
+        for (String s : list) {
+            if (s != null && s.length() > max) max = s.length();
+        }
+        return max;
+    }
+
+    // 384. Find index of max value in an int array
+    public static int indexOfMax_384(int[] arr) {
+        if (arr == null || arr.length == 0) return -1;
+        int maxIdx = 0;
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > arr[maxIdx]) maxIdx = i;
+        }
+        return maxIdx;
+    }
+
+    // 385. Format integer as currency (e.g., 1000 → 1,000)
+    public static String formatCurrency_385(int value) {
+        return String.format("%,d", value);
+    }
+
+    // 386. Convert seconds to HH:mm:ss format
+    public static String secondsToTime_386(int totalSeconds) {
+        int hours = totalSeconds / 3600;
+        int minutes = (totalSeconds % 3600) / 60;
+        int seconds = totalSeconds % 60;
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
+    // 387. Convert HH:mm:ss to total seconds
+    public static int timeToSeconds_387(String time) {
+        if (time == null || !time.matches("\\d{2}:\\d{2}:\\d{2}")) return 0;
+        String[] parts = time.split(":");
+        return Integer.parseInt(parts[0]) * 3600 +
+               Integer.parseInt(parts[1]) * 60 +
+               Integer.parseInt(parts[2]);
+    }
+
+    // 388. Count digit characters in a string
+    public static int countDigits_388(String s) {
+        if (s == null) return 0;
+        int count = 0;
+        for (char c : s.toCharArray()) {
+            if (Character.isDigit(c)) count++;
+        }
+        return count;
+    }
+
+    // 389. Get the difference in days between two dates
+    public static long daysBetween_389(LocalDate d1, LocalDate d2) {
+        return ChronoUnit.DAYS.between(d1, d2);
+    }
+
+    // 390. Convert an int to a Roman numeral
+    public static String intToRoman_390(int num) {
+        String[] romans = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+        int[] values = {1000,900,500,400,100,90,50,40,10,9,5,4,1};
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < values.length; i++) {
+            while (num >= values[i]) {
+                sb.append(romans[i]);
+                num -= values[i];
+            }
+        }
+        return sb.toString();
+    }
+
+    // 391. Convert a Roman numeral to int
+    public static int romanToInt_391(String roman) {
+        Map<Character, Integer> map = Map.of(
+            'I', 1, 'V', 5, 'X', 10, 'L', 50,
+            'C', 100, 'D', 500, 'M', 1000
+        );
+        int result = 0, prev = 0;
+        for (int i = roman.length() - 1; i >= 0; i--) {
+            int curr = map.getOrDefault(roman.charAt(i), 0);
+            if (curr < prev) result -= curr;
+            else result += curr;
+            prev = curr;
+        }
+        return result;
+    }
+
+    // 392. Capitalize the first letter of each word
+    public static String capitalizeWords_392(String s) {
+        if (s == null || s.isEmpty()) return s;
+        String[] words = s.toLowerCase().split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                sb.append(Character.toUpperCase(word.charAt(0)))
+                  .append(word.substring(1)).append(" ");
+            }
+        }
+        return sb.toString().trim();
+    }
+
+    // 393. Replace the nth occurrence of a substring
+    public static String replaceNth_393(String s, String find, String replace, int n) {
+        int index = -1;
+        while (n-- > 0 && (index = s.indexOf(find, index + 1)) != -1) {}
+        if (index != -1) {
+            return s.substring(0, index) + replace + s.substring(index + find.length());
+        }
+        return s;
+    }
+
+    // 394. Count the number of vowels in a string
+    public static int countVowels_394(String s) {
+        if (s == null) return 0;
+        int count = 0;
+        for (char c : s.toLowerCase().toCharArray()) {
+            if ("aeiou".indexOf(c) != -1) count++;
+        }
+        return count;
+    }
+
+    // 395. Reverse the words in a sentence
+    public static String reverseWords_395(String sentence) {
+        if (sentence == null) return null;
+        String[] words = sentence.trim().split("\\s+");
+        Collections.reverse(Arrays.asList(words));
+        return String.join(" ", words);
+    }
+
+    // 396. Format duration in milliseconds to readable time
+    public static String formatDuration_396(long ms) {
+        long seconds = ms / 1000;
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+        return String.format("%02dh %02dm %02ds", hours, minutes % 60, seconds % 60);
+    }
+
+    // 397. Get the middle character(s) of a string
+    public static String middleChars_397(String s) {
+        if (s == null || s.isEmpty()) return "";
+        int mid = s.length() / 2;
+        return (s.length() % 2 == 0) ? s.substring(mid - 1, mid + 1) : String.valueOf(s.charAt(mid));
+    }
+
+    // 398. Get the current Unix timestamp (seconds)
+    public static long getUnixTimestamp_398() {
+        return Instant.now().getEpochSecond();
+    }
+
+    // 399. Get the number of days in a given month/year
+    public static int daysInMonth_399(int year, int month) {
+        return YearMonth.of(year, month).lengthOfMonth();
+    }
+
+    // 400. Check if a number is even
+    public static boolean isEven_400(int number) {
+        return number % 2 == 0;
+    }
 }
