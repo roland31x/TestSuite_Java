@@ -2327,4 +2327,222 @@ public class Utils {
     public static boolean randomBoolean_275() {
         return new Random().nextBoolean();
     }
+
+    // 276. Join a list of strings with a delimiter
+    public static String joinWithDelimiter_276(List<String> list, String delimiter) {
+        if (list == null || list.isEmpty()) return "";
+        if (delimiter == null) delimiter = "";
+        StringBuilder sb = new StringBuilder();
+        for (String s : list) {
+            if (s != null) sb.append(s);
+            sb.append(delimiter);
+        }
+        if (sb.length() > 0 && delimiter.length() > 0) {
+            sb.setLength(sb.length() - delimiter.length());
+        }
+        return sb.toString();
+    }
+
+    // 277. Generate a random integer between min and max (inclusive)
+    public static int randomIntBetween_277(int min, int max) {
+        if (min > max) throw new IllegalArgumentException("min > max");
+        return new Random().nextInt(max - min + 1) + min;
+    }
+
+    // 278. Format a double to n decimal places
+    public static String formatDecimal_278(double value, int decimalPlaces) {
+        if (decimalPlaces < 0) throw new IllegalArgumentException("Negative decimal places");
+        return String.format("%." + decimalPlaces + "f", value);
+    }
+
+    // 279. Convert a map to a query string (e.g., key1=val1&key2=val2)
+    public static String mapToQueryString_279(Map<String, String> map) {
+        if (map == null || map.isEmpty()) return "";
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            if (entry.getKey() != null && entry.getValue() != null) {
+                sb.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
+            }
+        }
+        if (sb.length() > 0) sb.setLength(sb.length() - 1);
+        return sb.toString();
+    }
+
+    // 280. Parse a query string to a map (e.g., key1=val1&key2=val2)
+    public static Map<String, String> queryStringToMap_280(String qs) {
+        Map<String, String> map = new HashMap<>();
+        if (qs == null || qs.isEmpty()) return map;
+        String[] pairs = qs.split("&");
+        for (String pair : pairs) {
+            String[] kv = pair.split("=", 2);
+            if (kv.length == 2) {
+                map.put(kv[0], kv[1]);
+            }
+        }
+        return map;
+    }
+
+    // 281. Check if a string contains only letters
+    public static boolean isAlpha_281(String s) {
+        if (s == null || s.isEmpty()) return false;
+        return s.matches("[a-zA-Z]+");
+    }
+
+    // 282. Generate a random string from a given set of characters
+    public static String randomStringFromSet_282(int length, String charset) {
+        if (length <= 0) return "";
+        if (charset == null || charset.isEmpty()) charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        Random rand = new Random();
+        StringBuilder sb = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            sb.append(charset.charAt(rand.nextInt(charset.length())));
+        }
+        return sb.toString();
+    }
+
+    // 283. Compute the greatest common divisor (GCD) of two numbers
+    public static int gcd_283(int a, int b) {
+        a = Math.abs(a);
+        b = Math.abs(b);
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+
+    // 284. Compute the least common multiple (LCM) of two numbers
+    public static int lcm_284(int a, int b) {
+        if (a == 0 || b == 0) return 0;
+        return Math.abs(a * b) / gcd_283(a, b);
+    }
+
+    // 285. Check if a number is prime
+    public static boolean isPrime_285(int n) {
+        if (n <= 1) return false;
+        if (n <= 3) return true;
+        if (n % 2 == 0 || n % 3 == 0) return false;
+        for (int i = 5; i * i <= n; i += 6) {
+            if (n % i == 0 || n % (i + 2) == 0) return false;
+        }
+        return true;
+    }
+
+    // 286. Find the factorial of a number (iterative)
+    public static long factorialIter_286(int n) {
+        if (n < 0) throw new IllegalArgumentException("Negative");
+        long fact = 1;
+        for (int i = 2; i <= n; i++) {
+            fact *= i;
+        }
+        return fact;
+    }
+
+    // 287. Convert binary string to decimal integer
+    public static int binaryToDecimal_287(String binary) {
+        if (binary == null || !binary.matches("[01]+")) throw new IllegalArgumentException("Invalid binary");
+        return Integer.parseInt(binary, 2);
+    }
+
+    // 288. Convert decimal integer to binary string
+    public static String decimalToBinary_288(int decimal) {
+        return Integer.toBinaryString(decimal);
+    }
+
+    // 289. Check if a number is even
+    public static boolean isEven_289(int n) {
+        return n % 2 == 0;
+    }
+
+    // 290. Check if a number is odd
+    public static boolean isOdd_290(int n) {
+        return n % 2 != 0;
+    }
+
+    // 291. Calculate the sum of all elements in an int array
+    public static int sumIntArray_291(int[] arr) {
+        if (arr == null) return 0;
+        int sum = 0;
+        for (int val : arr) {
+            sum += val;
+        }
+        return sum;
+    }
+
+    // 292. Calculate average of elements in a double array
+    public static double averageDoubleArray_292(double[] arr) {
+        if (arr == null || arr.length == 0) throw new IllegalArgumentException("Empty array");
+        double sum = 0;
+        for (double v : arr) {
+            sum += v;
+        }
+        return sum / arr.length;
+    }
+
+    // 293. Convert a string to title case
+    public static String toTitleCase_293(String s) {
+        if (s == null || s.isEmpty()) return s;
+        String[] words = s.toLowerCase().split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for (String w : words) {
+            if (w.length() > 0) {
+                sb.append(Character.toUpperCase(w.charAt(0)));
+                sb.append(w.substring(1));
+                sb.append(" ");
+            }
+        }
+        return sb.toString().trim();
+    }
+
+    // 294. Check if a string ends with any of a given list of suffixes
+    public static boolean endsWithAny_294(String s, List<String> suffixes) {
+        if (s == null || suffixes == null) return false;
+        for (String suffix : suffixes) {
+            if (suffix != null && s.endsWith(suffix)) return true;
+        }
+        return false;
+    }
+
+    // 295. Generate a random color in RGB format "rgb(r,g,b)"
+    public static String randomRgbColor_295() {
+        Random rand = new Random();
+        return String.format("rgb(%d,%d,%d)", rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
+    }
+
+    // 296. Convert a string array to list
+    public static List<String> arrayToList_296(String[] arr) {
+        if (arr == null) return new ArrayList<>();
+        return Arrays.asList(arr);
+    }
+
+    // 297. Check if a list contains duplicates
+    public static <T> boolean hasDuplicates_297(List<T> list) {
+        if (list == null) return false;
+        Set<T> set = new HashSet<>();
+        for (T item : list) {
+            if (!set.add(item)) return true;
+        }
+        return false;
+    }
+
+    // 298. Round a double to nearest integer
+    public static int roundDouble_298(double val) {
+        return (int) Math.round(val);
+    }
+
+    // 299. Calculate the sum of squares of integers in an array
+    public static int sumSquares_299(int[] arr) {
+        if (arr == null) return 0;
+        int sum = 0;
+        for (int val : arr) {
+            sum += val * val;
+        }
+        return sum;
+    }
+
+    // 300. Convert degrees to radians
+    public static double degreesToRadians_300(double degrees) {
+        return degrees * Math.PI / 180.0;
+    }
 }
