@@ -3775,4 +3775,317 @@ public class Utils {
             int temp = array[i]; array[i] = array[j]; array[j] = temp;
         }
     }
+
+    // 451. Get the median of a list of integers
+    public static double median_451(List<Integer> list) {
+        if (list == null || list.isEmpty()) return 0;
+        List<Integer> sorted = new ArrayList<>(list);
+        Collections.sort(sorted);
+        int middle = sorted.size() / 2;
+        if (sorted.size() % 2 == 0) {
+            return (sorted.get(middle - 1) + sorted.get(middle)) / 2.0;
+        } else {
+            return sorted.get(middle);
+        }
+    }
+
+    // 452. Count vowels in a string
+    public static int countVowels_452(String s) {
+        if (s == null) return 0;
+        return (int) s.toLowerCase().chars().filter("aeiou"::indexOf).count();
+    }
+
+    // 453. Count consonants in a string
+    public static int countConsonants_453(String s) {
+        if (s == null) return 0;
+        return (int) s.toLowerCase().chars()
+                .filter(c -> Character.isLetter(c) && "aeiou".indexOf(c) == -1).count();
+    }
+
+    // 454. Check if string is all uppercase
+    public static boolean isAllUppercase_454(String s) {
+        return s != null && s.equals(s.toUpperCase());
+    }
+
+    // 455. Check if string is all lowercase
+    public static boolean isAllLowercase_455(String s) {
+        return s != null && s.equals(s.toLowerCase());
+    }
+
+    // 456. Capitalize every word in a string
+    public static String capitalizeWords_456(String s) {
+        if (s == null || s.isEmpty()) return s;
+        return Arrays.stream(s.split("\\s+"))
+                .map(w -> w.isEmpty() ? w :
+                        Character.toUpperCase(w.charAt(0)) + w.substring(1).toLowerCase())
+                .collect(Collectors.joining(" "));
+    }
+
+    // 457. Get unique characters from string
+    public static Set<Character> uniqueChars_457(String s) {
+        if (s == null) return Set.of();
+        return s.chars().mapToObj(c -> (char) c).collect(Collectors.toSet());
+    }
+
+    // 458. Reverse word order in a sentence
+    public static String reverseWords_458(String sentence) {
+        if (sentence == null || sentence.isEmpty()) return sentence;
+        String[] words = sentence.trim().split("\\s+");
+        Collections.reverse(Arrays.asList(words));
+        return String.join(" ", words);
+    }
+
+    // 459. Remove excess whitespace
+    public static String normalizeWhitespace_459(String s) {
+        return s == null ? null : s.trim().replaceAll("\\s+", " ");
+    }
+
+    // 460. Get current timestamp in milliseconds
+    public static long currentTimestampMillis_460() {
+        return System.currentTimeMillis();
+    }
+
+    // 461. Convert int to binary string
+    public static String intToBinary_461(int n) {
+        return Integer.toBinaryString(n);
+    }
+
+    // 462. Convert binary string to int
+    public static int binaryToInt_462(String binary) {
+        return Integer.parseInt(binary, 2);
+    }
+
+    // 463. Convert int to hex string
+    public static String intToHex_463(int n) {
+        return Integer.toHexString(n);
+    }
+
+    // 464. Convert hex string to int
+    public static int hexToInt_464(String hex) {
+        return Integer.parseInt(hex, 16);
+    }
+
+    // 465. Convert seconds to HH:mm:ss
+    public static String secondsToTime_465(int seconds) {
+        int h = seconds / 3600;
+        int m = (seconds % 3600) / 60;
+        int s = seconds % 60;
+        return String.format("%02d:%02d:%02d", h, m, s);
+    }
+
+    // 466. Convert HH:mm:ss to seconds
+    public static int timeToSeconds_466(String time) {
+        String[] parts = time.split(":");
+        int h = Integer.parseInt(parts[0]);
+        int m = Integer.parseInt(parts[1]);
+        int s = Integer.parseInt(parts[2]);
+        return h * 3600 + m * 60 + s;
+    }
+
+    // 467. Get file extension from filename
+    public static String getFileExtension_467(String filename) {
+        if (filename == null) return "";
+        int dot = filename.lastIndexOf('.');
+        return (dot == -1) ? "" : filename.substring(dot + 1);
+    }
+
+    // 468. Remove file extension from filename
+    public static String removeFileExtension_468(String filename) {
+        if (filename == null) return "";
+        int dot = filename.lastIndexOf('.');
+        return (dot == -1) ? filename : filename.substring(0, dot);
+    }
+
+    // 469. Truncate string with ellipsis
+    public static String truncateWithEllipsis_469(String s, int maxLength) {
+        if (s == null || maxLength < 3 || s.length() <= maxLength) return s;
+        return s.substring(0, maxLength - 3) + "...";
+    }
+
+    // 470. Check if email is valid
+    public static boolean isValidEmail_470(String email) {
+        if (email == null) return false;
+        return email.matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$");
+    }
+
+    // 471. Remove HTML tags from string
+    public static String stripHtmlTags_471(String s) {
+        if (s == null) return null;
+        return s.replaceAll("<[^>]*>", "");
+    }
+
+    // 472. Get number of days between two dates
+    public static long daysBetween_472(LocalDate start, LocalDate end) {
+        return ChronoUnit.DAYS.between(start, end);
+    }
+
+    // 473. Get difference in minutes between two LocalTime values
+    public static long minutesBetween_473(LocalTime t1, LocalTime t2) {
+        return ChronoUnit.MINUTES.between(t1, t2);
+    }
+
+    // 474. Check if a string is a valid Java identifier
+    public static boolean isJavaIdentifier_474(String s) {
+        if (s == null || s.isEmpty() || !Character.isJavaIdentifierStart(s.charAt(0))) return false;
+        for (char c : s.toCharArray()) {
+            if (!Character.isJavaIdentifierPart(c)) return false;
+        }
+        return true;
+    }
+
+    // 475. Convert camelCase to snake_case
+    public static String camelToSnake_475(String s) {
+        if (s == null) return null;
+        return s.replaceAll("([a-z])([A-Z])", "$1_$2").toLowerCase();
+    }
+
+    // 476. Convert snake_case to camelCase
+    public static String snakeToCamel_476(String s) {
+        if (s == null) return null;
+        String[] parts = s.split("_");
+        return parts[0] + Arrays.stream(parts, 1, parts.length)
+                .map(w -> Character.toUpperCase(w.charAt(0)) + w.substring(1))
+                .collect(Collectors.joining());
+    }
+
+    // 477. Convert list to set
+    public static <T> Set<T> listToSet_477(List<T> list) {
+        return new HashSet<>(list);
+    }
+
+    // 478. Convert set to list
+    public static <T> List<T> setToList_478(Set<T> set) {
+        return new ArrayList<>(set);
+    }
+
+    // 479. Check if string is a valid IPv4
+    public static boolean isValidIPv4_479(String ip) {
+        if (ip == null) return false;
+        return ip.matches("^((25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)$");
+    }
+
+    // 480. Check if list is sorted ascending
+    public static <T extends Comparable<T>> boolean isSorted_480(List<T> list) {
+        for (int i = 1; i < list.size(); i++) {
+            if (list.get(i).compareTo(list.get(i - 1)) < 0) return false;
+        }
+        return true;
+    }
+
+    // 481. Count digits in an integer
+    public static int countDigits_481(int number) {
+        return Integer.toString(Math.abs(number)).length();
+    }
+
+    // 482. Convert LocalDateTime to ISO string
+    public static String toIsoString_482(LocalDateTime dt) {
+        return dt.format(DateTimeFormatter.ISO_DATE_TIME);
+    }
+
+    // 483. Parse ISO string to LocalDateTime
+    public static LocalDateTime parseIsoString_483(String iso) {
+        return LocalDateTime.parse(iso, DateTimeFormatter.ISO_DATE_TIME);
+    }
+
+    // 484. Swap two integers using an array
+    public static void swapInts_484(int[] a, int i, int j) {
+        int tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+
+    // 485. Get average from list
+    public static double average_485(List<Integer> list) {
+        if (list == null || list.isEmpty()) return 0;
+        return list.stream().mapToInt(Integer::intValue).average().orElse(0);
+    }
+
+    // 486. Check if a string is a pangram
+    public static boolean isPangram_486(String s) {
+        return s != null && s.toLowerCase().chars().filter(Character::isLetter)
+                .map(c -> c - 'a').distinct().count() == 26;
+    }
+
+    // 487. Remove trailing slash from URL
+    public static String removeTrailingSlash_487(String url) {
+        if (url == null) return null;
+        return url.endsWith("/") ? url.substring(0, url.length() - 1) : url;
+    }
+
+    // 488. Get domain from email
+    public static String getEmailDomain_488(String email) {
+        if (email == null) return "";
+        int at = email.lastIndexOf('@');
+        return at != -1 ? email.substring(at + 1) : "";
+    }
+
+    // 489. Get initials from full name
+    public static String getInitials_489(String name) {
+        if (name == null || name.isEmpty()) return "";
+        return Arrays.stream(name.trim().split("\\s+"))
+                .filter(w -> !w.isEmpty())
+                .map(w -> w.substring(0, 1).toUpperCase())
+                .collect(Collectors.joining());
+    }
+
+    // 490. Convert milliseconds to readable time (Xh Ym Zs)
+    public static String millisToReadableTime_490(long millis) {
+        long sec = millis / 1000;
+        long min = sec / 60;
+        long hr = min / 60;
+        sec %= 60;
+        min %= 60;
+        return String.format("%dh %dm %ds", hr, min, sec);
+    }
+
+    // 491. Get current Unix timestamp
+    public static long unixTimestamp_491() {
+        return Instant.now().getEpochSecond();
+    }
+
+    // 492. Parse boolean with default
+    public static boolean parseBooleanOrDefault_492(String s, boolean def) {
+        if (s == null) return def;
+        return s.equalsIgnoreCase("true") || s.equalsIgnoreCase("yes") || s.equals("1");
+    }
+
+    // 493. Encode string to Base64
+    public static String base64Encode_493(String s) {
+        return Base64.getEncoder().encodeToString(s.getBytes(StandardCharsets.UTF_8));
+    }
+
+    // 494. Decode Base64 string
+    public static String base64Decode_494(String base64) {
+        return new String(Base64.getDecoder().decode(base64), StandardCharsets.UTF_8);
+    }
+
+    // 495. Check if string is blank
+    public static boolean isBlank_495(String s) {
+        return s == null || s.trim().isEmpty();
+    }
+
+    // 496. Generate random integer in range
+    public static int randomIntInRange_496(int min, int max) {
+        return new Random().nextInt(max - min + 1) + min;
+    }
+
+    // 497. Capitalize first character only
+    public static String capitalizeFirst_497(String s) {
+        if (s == null || s.isEmpty()) return s;
+        return Character.toUpperCase(s.charAt(0)) + s.substring(1);
+    }
+
+    // 498. Decapitalize first character only
+    public static String decapitalizeFirst_498(String s) {
+        if (s == null || s.isEmpty()) return s;
+        return Character.toLowerCase(s.charAt(0)) + s.substring(1);
+    }
+
+    // 499. Remove all digits from string
+    public static String removeDigits_499(String s) {
+        return s == null ? null : s.replaceAll("\\d", "");
+    }
+
+    // 500. Remove all letters from string
+    public static String removeLetters_500(String s) {
+        return s == null ? null : s.replaceAll("[a-zA-Z]", "");
+    }
 }
